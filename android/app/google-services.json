@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "704273651670",
+    "project_id": "taskk5",
+    "storage_bucket": "taskk5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704273651670:android:c73aa8fc6ba5c9ec137677",
+        "android_client_info": {
+          "package_name": "com.example.taskk5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704273651670-rf8dakejb4vqjc6smdm370qb7ql92tvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5wLfVRGwSd8izKc9uAE2wKNpO_DnAB6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704273651670-rf8dakejb4vqjc6smdm370qb7ql92tvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
