@@ -1,16 +1,6 @@
 # taskk5
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_1692745832](https://github.com/reem198/reemtask5/assets/107630534/81d72a3f-4a0d-404b-96c2-12f60abaf214)
+![Screenshot_1692745284](https://github.com/reem198/reemtask5/assets/107630534/78a8606b-e3b1-4ef3-b530-cffee83e81b9)
+![Screenshot_1692745301](https://github.com/reem198/reemtask5/assets/107630534/0055fba3-d6c3-439d-abef-3fe7986828bf)
+![Screenshot_1692745873](https://github.com/reem198/reemtask5/assets/107630534/65ac438a-5489-4e82-bafd-f9cbe1b9a954)
