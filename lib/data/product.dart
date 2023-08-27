@@ -8,6 +8,7 @@ class Product {
     required this.name,
     required this.img,
   });
+
 }
 
 List<Product> product = [

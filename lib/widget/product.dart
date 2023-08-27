@@ -22,22 +22,19 @@ class _TxtState extends State<Txt> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Container(
-          height: 150,
-          width: 180,
-          decoration: const BoxDecoration(color: Colors.brown),
-        ),
         Positioned(
           top: 15,
           child: Container(
-            padding: const EdgeInsets.all(2),
-            height: 110,
-            width: 140,
-            child: Image.asset(
-              widget.product.img,
-              fit: BoxFit.cover,
-            ),
-          ),
+              padding: const EdgeInsets.all(2),
+              height: 110,
+              width: 140,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30.0),
+                child: Image.asset(
+                  widget.product.img,
+                  fit: BoxFit.cover,
+                ),
+              )),
         ),
         Positioned(
           bottom: 20,
@@ -48,7 +45,7 @@ class _TxtState extends State<Txt> {
               widget.product.name,
               style: const TextStyle(
                 fontSize: 25,
-                color: Colors.white,
+                color: Colors.brown,
               ),
             ),
           ),
@@ -59,7 +56,7 @@ class _TxtState extends State<Txt> {
           child: Container(
             child: Text(
               widget.product.price.toString(),
-              style: const TextStyle(fontSize: 25, color: Colors.white),
+              style: const TextStyle(fontSize: 25, color: Colors.brown),
             ),
           ),
         ),

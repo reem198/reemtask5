@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taskk5/pages/homepage.dart';
 import 'package:taskk5/pages/profile.dart';
 import 'package:taskk5/pages/signup.dart';
-
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -45,18 +44,18 @@ class _HomeLayoutState extends State<HomeLayout> {
       body: screens[currentIndex],
       appBar: AppBar(
         leading: IconButton(
-            color: Colors.white,
-            onPressed: () async {
-              await signOut().then((value) {
-                if (value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                        return const signup();
-                      }));
-                }
-              });
-            },
-            icon: const Icon(Icons.logout),
+          color: Colors.white,
+          onPressed: () async {
+            await signOut().then((value) {
+              if (value) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const signup();
+                }));
+              }
+            });
+          },
+          icon: const Icon(Icons.logout),
         ),
         centerTitle: true,
         backgroundColor: Colors.brown,
@@ -76,18 +75,26 @@ class _HomeLayoutState extends State<HomeLayout> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          getPage(index);
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'profile',
-          )
-        ],
+      bottomSheet: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: Colors.brown),
+        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            getPage(index);
+          },
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled), label: 'home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'profile',
+            )
+          ],
+        ),
       ),
     );
   }

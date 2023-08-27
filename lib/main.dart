@@ -1,18 +1,34 @@
-// ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
+// ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taskk5/BlocObserver.dart';
+import 'package:taskk5/cubit/my_app_cubit.dart';
 import 'package:taskk5/firebase_options.dart';
 import 'package:taskk5/pages/login.dart';
 import 'package:taskk5/widget/homelayout.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<MyAppCubit>(
+          create: (context) => MyAppCubit()
+            ..getDataFromFirebase()
+            ..getDataFromFirebase(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

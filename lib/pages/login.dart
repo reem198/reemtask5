@@ -1,52 +1,27 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:taskk5/cubit/my_app_cubit.dart';
+import 'package:taskk5/cubit/my_app_state.dart';
 import 'package:taskk5/pages/signup.dart';
 import 'package:taskk5/widget/homelayout.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+// ignore: must_be_immutable
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
 
   TextEditingController password = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future<void> login(
-      String email,
-      String password,
-      ) async {
-    if (formKey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        )
-            .then((value) {
-          if (value.user != null) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-                  return const HomeLayout();
-                }));
-          }
-        });
-      } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Form(
@@ -55,22 +30,36 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('email'),
+              const Text(
+                'Welcome back! Glad\n to see you, Again!',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 50,
+              ),
               TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'Email',
+                    contentPadding: const EdgeInsets.all(15),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30))),
                 controller: email,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'email must be not empty';
                   }
                   return null;
-
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text('password'),
               TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    contentPadding: const EdgeInsets.all(15),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30))),
                 controller: password,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -82,37 +71,104 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               const SizedBox(
-                height: 10,
+                height: 40,
+              ),
+              BlocConsumer<MyAppCubit, MyAppState>(
+                listener: (context, state) {
+                  if (state is LoginErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          state.error,
+                        ),
+                      ),
+                    );
+                  } else if (state is LoginDoneState) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const HomeLayout();
+                    }));
+                  }
+                },
+                builder: (context, state) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      backgroundColor: Colors.brown, // Background color
+                    ),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        context.read<MyAppCubit>().login(
+                              email.text,
+                              password.text,
+                            );
+                      }
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      await login(
-                        email.text,
-                        password.text,
-                      );
-                    },
-                    style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.brown),
+                  Expanded(
+                    child: Divider(
+                      thickness: 3,
+                      endIndent: 10,
                     ),
-                    child: const Text('login'),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
+                  Text(
+                    'Or Login with',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      thickness: 3,
+                      indent: 10,
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset('assets/facebook.svg'),
+                  SvgPicture.asset('assets/google.svg'),
+                  SvgPicture.asset('assets/apple.svg'),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Don’t have an account?',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  TextButton(
+                    onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return const signup();
-                          }));
+                        return const signup();
+                      }));
                     },
-                    style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.brown),
+                    child: Text(
+                      'Register Now',
+                      style: TextStyle(fontSize: 16, color: Colors.brown),
                     ),
-                    child: const Text('create account'),
-                  ),
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),
